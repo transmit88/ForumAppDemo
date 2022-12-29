@@ -2,7 +2,6 @@
 using ForumAppDemo.Data.Models;
 using ForumAppDemo.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ForumAppDemo.Controllers
 {
