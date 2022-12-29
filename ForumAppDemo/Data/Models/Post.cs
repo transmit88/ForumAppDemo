@@ -20,5 +20,9 @@ namespace ForumAppDemo.Data.Models
         [Required]
         [MaxLength(ContentMaxLength)]
         public string Content { get; set; }
+
+        [Comment("Mark record as delete")]
+        [Required]
+        public bool IsDelete { get; set; } = false;
     }
 }

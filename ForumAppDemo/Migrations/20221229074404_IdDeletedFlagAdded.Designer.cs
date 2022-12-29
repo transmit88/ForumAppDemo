@@ -3,6 +3,7 @@ using ForumAppDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumAppDemo.Migrations
 {
     [DbContext(typeof(ForumAppDemoDbContext))]
-    partial class ForumAppDemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221229074404_IdDeletedFlagAdded")]
+    partial class IdDeletedFlagAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
