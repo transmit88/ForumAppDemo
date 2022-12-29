@@ -1,4 +1,5 @@
 ﻿using ForumAppDemo.Data;
+using ForumAppDemo.Data.Models;
 using ForumAppDemo.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,24 @@ namespace ForumAppDemo.Controllers
                 .ToList();
 
             return View(posts);
+        }
+
+        public IActionResult Add()
+            => View();
+
+        [HttpPost]
+        public IActionResult Add(PostViewModel model)
+        {
+            var post = new Post()
+            {
+                Title = model.Title,
+                Content = model.Content,
+            };
+
+            context.Posts.Add(post);
+            context.SaveChanges();
+
+            return RedirectToAction("All");
         }
     }
 }
