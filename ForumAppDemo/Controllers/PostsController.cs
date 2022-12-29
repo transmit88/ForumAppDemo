@@ -2,6 +2,7 @@
 using ForumAppDemo.Data.Models;
 using ForumAppDemo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ForumAppDemo.Controllers
 {
@@ -16,6 +17,7 @@ namespace ForumAppDemo.Controllers
         public IActionResult All()
         {
             var posts = context.Posts
+                .Where(p => p.IsDelete == false)
                 .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
@@ -60,9 +62,14 @@ namespace ForumAppDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, PostViewModel model)
+        public async Task<IActionResult> Edit(int id, PostViewModel model)
         {
-            var post = context.Posts.Find(id);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var post = await context.Posts.FindAsync(id);
 
             if (post != null)
             {
@@ -70,10 +77,26 @@ namespace ForumAppDemo.Controllers
                 post.Content = model.Content;
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id) 
+        {
+            var post = await context.Posts.FindAsync(id);
+
+            if (post != null)
+            {
+                post.IsDelete = true;  // Set IsDelete Flag = True
+                await context.SaveChangesAsync();
+
+                //context.Posts.Remove(post); Delete directly from database
+                //context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }
