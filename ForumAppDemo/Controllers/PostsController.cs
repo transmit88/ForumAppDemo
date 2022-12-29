@@ -12,6 +12,7 @@ namespace ForumAppDemo.Controllers
         public PostsController(ForumAppDemoDbContext _context)
             => this.context = _context;
 
+        [HttpGet]
         public IActionResult All()
         {
             var posts = context.Posts
@@ -26,6 +27,7 @@ namespace ForumAppDemo.Controllers
             return View(posts);
         }
 
+        [HttpGet]
         public IActionResult Add()
             => View();
 
@@ -43,5 +45,35 @@ namespace ForumAppDemo.Controllers
 
             return RedirectToAction("All");
         }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var post = context.Posts.Find(id);
+
+            return View(new PostViewModel()
+            {
+                Title = post.Title,
+                Content = post.Content,
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, PostViewModel model)
+        {
+            var post = context.Posts.Find(id);
+
+            if (post != null)
+            {
+                post.Title = model.Title;
+                post.Content = model.Content;
+            }
+
+            context.SaveChanges();
+
+            return RedirectToAction("All");
+        }
+
     }
 }
