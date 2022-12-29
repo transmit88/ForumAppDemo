@@ -14,7 +14,7 @@ namespace ForumAppDemo.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new PostConfiguration());
+            //builder.ApplyConfiguration(new PostConfiguration());
             builder.Entity<Post>()
                 .Property(p => p.IsDelete)
                 .HasDefaultValue(false);
